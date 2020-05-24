@@ -1,10 +1,10 @@
 const mysql = require('mysql');
-const db = mysql.createConnection({
+const dbConfiguration = {
   host: 'localhost',
   user: 'logger',
   password: '123456',
   database: 'aforo'
-});
+};
 
 /**
  * Executes a database query and handles any possible error.
@@ -12,6 +12,7 @@ const db = mysql.createConnection({
  */
 function executeQuery(query) {
   return new Promise((resolve, reject) => {
+    const db = mysql.createConnection(dbConfiguration);
     db.connect(function (err) {
       if (err) {
         return reject(err);
@@ -25,14 +26,8 @@ function executeQuery(query) {
       }
       return resolve({ rows, fields });
     });
-    db.end(function (err) {
-      if (err) {
-        return reject(err);
-      }
-  
-      console.log('DB disconnected');
-    });
+    db.end();
   });
 }
 
-module.exports = { db, executeQuery };
+module.exports = { executeQuery };
