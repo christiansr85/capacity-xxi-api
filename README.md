@@ -38,7 +38,7 @@ http://localhost:4000/
 
 You can also query, for instance, the list of available parameters with the next call:
 
-http://localhost:4000/parameters
+http://localhost:4000/parameter
 
 ## Database
 
