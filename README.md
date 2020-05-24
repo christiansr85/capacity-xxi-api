@@ -39,3 +39,23 @@ http://localhost:4000/
 You can also query, for instance, the list of available parameters with the next call:
 
 http://localhost:4000/parameters
+
+## Database
+
+The creation script of the database is included under the `db` folder. We also provide some insert scripts to test the application.
+
+The scheme looks like this:
+
+```
+aforo
+  |----parametros
+  |      |-------parametro (varchar(20))
+  |      |-------valor (varchar(20))
+  |
+  |----registro
+         |-------fecha (datetime)
+         |-------milisegundos (int(3))
+         |-------entsal (int(4))
+         |-------sensor (int(4))
+         |-------puerta (int(4))
+```
