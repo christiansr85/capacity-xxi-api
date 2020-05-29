@@ -1,10 +1,11 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const parametersModule = require('./parameters');
 const registerModule = require('./register');
 
-const PORT = process.env.PORT || 4000;
+app.use(cors());
 
 app.get('/', (req, res) => {
     res.json({ test: 'Service running OK' });
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 app.use('/parameter', parametersModule);
 app.use('/register', registerModule);
 
+const PORT = process.env.PORT || 4000;
 const init = () => {
     app.listen(PORT, () =>
         console.log(`Express Server Now Running On localhost:${PORT}`)
