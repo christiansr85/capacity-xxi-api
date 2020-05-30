@@ -7,7 +7,16 @@ const { executeQuery } = require('../../database');
  */
 function getParameters(req, res) {
     executeQuery('SELECT * FROM parametros')
-        .then(result => res.json(result.rows))
+        .then(result => {
+            if (result.rows) {             
+                return result.rows.reduce((obj, item) => {
+                    obj[item.parametro] = item.valor;
+                    return obj;
+                }, {});
+            }
+            return null;
+        })
+        .then(result => res.json(result))
         .catch(err => res.status(500).json(err));
 }
 
