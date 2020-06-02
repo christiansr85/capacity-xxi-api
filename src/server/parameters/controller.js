@@ -6,7 +6,7 @@ const { executeQuery } = require('../../database');
  * @param {*} res The response object used to serve the answer to the client.
  */
 function getParameters(req, res) {
-    executeQuery('SELECT * FROM parametros')
+    executeQuery('SELECT * FROM aforo.parametros')
         .then(result => {
             if (result.rows) {             
                 return result.rows.reduce((obj, item) => {
@@ -26,7 +26,7 @@ function getParameters(req, res) {
  * @param {*} res The response object used to serve the answer to the client.
  */
 function getParameter(req, res) {
-    executeQuery(`SELECT * FROM parametros where parametro='${req.params.parameter}'`)
+    executeQuery(`SELECT * FROM aforo.parametros where parametro='${req.params.parameter}'`)
     .then(result => res.json(result.rows[0]))
     .catch(err => res.status(500).json(err));
 }

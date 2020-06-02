@@ -1,32 +1,25 @@
-const mysql = require('mysql');
-const dbConfiguration = {
-  host: 'localhost',
-  user: 'logger',
-  password: '123456',
-  database: 'aforo'
-};
+const {Pool} = require('pg');
+
+const connectionString = 'postgres://logger:123456@localhost:5432/aforo';
+
+const pool = new Pool({
+  connectionString: connectionString,
+  ssl: false
+});
+
 
 /**
  * Executes a database query and handles any possible error.
  * @param {string} query The SQL query to execute.
  */
 function executeQuery(query) {
-  return new Promise((resolve, reject) => {
-    const db = mysql.createConnection(dbConfiguration);
-    db.connect(function (err) {
-      if (err) {
-        return reject(err);
+  return new Promise((reslove, reject) => {
+    pool.query(query, (error, results) => {
+      if (error) {
+        reject(error);
       }
-  
-      console.log('connected as id ' + db.threadId);
-    });
-    db.query(query, function (err, rows, fields) {
-      if (err) {
-        return reject(err);
-      }
-      return resolve({ rows, fields });
-    });
-    db.end();
+      reslove(results);
+    })
   });
 }
 

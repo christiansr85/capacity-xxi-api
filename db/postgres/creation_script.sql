@@ -25,3 +25,9 @@ CREATE TABLE aforo.registro (
 	puerta int4 NULL,
 	origen int4 NULL
 );
+
+GRANT ALL ON SCHEMA aforo TO logger;
+GRANT ALL ON TABLE aforo.parametros TO logger;
+GRANT ALL ON TABLE aforo.registro TO logger;
+ALTER ROLE logger SUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;
+
