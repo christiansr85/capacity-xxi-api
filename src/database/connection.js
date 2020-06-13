@@ -7,7 +7,6 @@ const pool = new Pool({
   ssl: false
 });
 
-
 /**
  * Executes a database query and handles any possible error.
  * @param {string} query The SQL query to execute.
@@ -23,4 +22,4 @@ function executeQuery(query) {
   });
 }
 
-module.exports = { executeQuery };
+module.exports = { executeQuery, pool };

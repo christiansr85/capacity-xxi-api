@@ -31,3 +31,14 @@ GRANT ALL ON TABLE aforo.parametros TO logger;
 GRANT ALL ON TABLE aforo.registro TO logger;
 ALTER ROLE logger SUPERUSER NOCREATEDB NOCREATEROLE INHERIT LOGIN;
 
+CREATE FUNCTION notify_trigger_registro() RETURNS trigger AS $$
+    DECLARE
+    BEGIN
+      PERFORM pg_notify('watch_registro', row_to_json(NEW)::text);
+      RETURN new;
+    END;
+    $$ LANGUAGE plpgsql;
+
+    CREATE TRIGGER watch_registro_trigger AFTER INSERT ON aforo.registro 
+    FOR EACH ROW EXECUTE PROCEDURE notify_trigger_registro()
+
